@@ -1,77 +1,92 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
 ---
 
-<Layout title="Monti Studio — Creative Agency">
-  <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 pt-24 pb-32">
-    <h1 class="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.1] max-w-4xl">
-      We design and build
-      <span class="text-neutral-500">digital products that people love.</span>
-    </h1>
-    <p class="text-lg text-neutral-400 mt-8 max-w-xl">
-      Monti Studio is a creative agency helping brands stand out through design, development, and strategy.
-    </p>
-    <div class="mt-10 flex gap-4">
-      <a href="/contact" class="px-6 py-3 bg-white text-neutral-950 rounded-full font-medium hover:bg-neutral-200 transition-colors">
-        Start a project
-      </a>
-      <a href="/work" class="px-6 py-3 border border-neutral-700 rounded-full text-neutral-300 hover:border-neutral-500 transition-colors">
-        See our work
-      </a>
-    </div>
-  </section>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Monti Studio — Creative agency crafting digital experiences." />
+    <title>Monti Studio</title>
+  </head>
+  <body class="bg-[#f5f3f0] text-neutral-900 font-sans antialiased">
 
-  <!-- Featured Work -->
-  <section class="max-w-6xl mx-auto px-6 pb-32">
-    <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-widest mb-12">Selected Work</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <a href="/work" class="group block">
-        <div class="aspect-[4/3] bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800/50 flex items-center justify-center">
-          <span class="text-neutral-700 text-sm">Project image</span>
-        </div>
-        <h3 class="mt-4 text-lg font-medium group-hover:text-neutral-300 transition-colors">Project One</h3>
-        <p class="text-neutral-500 text-sm">Brand Identity &middot; Web Design</p>
-      </a>
-      <a href="/work" class="group block">
-        <div class="aspect-[4/3] bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800/50 flex items-center justify-center">
-          <span class="text-neutral-700 text-sm">Project image</span>
-        </div>
-        <h3 class="mt-4 text-lg font-medium group-hover:text-neutral-300 transition-colors">Project Two</h3>
-        <p class="text-neutral-500 text-sm">Web Development &middot; Strategy</p>
-      </a>
-    </div>
-  </section>
+    <div class="max-w-2xl mx-auto px-6 py-20 md:py-32">
 
-  <!-- Services Preview -->
-  <section class="border-t border-neutral-800/50 py-32">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-widest mb-12">What We Do</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div>
-          <h3 class="text-xl font-medium mb-3">Design</h3>
-          <p class="text-neutral-400 text-sm leading-relaxed">Brand identity, UI/UX design, and creative direction that captures your vision and speaks to your audience.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-medium mb-3">Development</h3>
-          <p class="text-neutral-400 text-sm leading-relaxed">Fast, responsive websites and web apps built with modern tech. Clean code, great performance.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-medium mb-3">Strategy</h3>
-          <p class="text-neutral-400 text-sm leading-relaxed">Digital strategy, content planning, and growth consulting to help your brand reach the right people.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      <!-- Name -->
+      <header class="mb-16">
+        <h1 class="text-[11vw] md:text-[4.5rem] font-light tracking-[0.15em] uppercase leading-none">
+          Monti<br />Studio
+        </h1>
+      </header>
 
-  <!-- CTA -->
-  <section class="py-32">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Have a project in mind?</h2>
-      <p class="text-neutral-400 mt-4 text-lg">Let's talk about how we can help.</p>
-      <a href="/contact" class="inline-block mt-8 px-8 py-4 bg-white text-neutral-950 rounded-full font-medium hover:bg-neutral-200 transition-colors">
-        Get in touch
-      </a>
+      <!-- Bio -->
+      <section class="mb-20">
+        <p class="text-base md:text-lg leading-relaxed text-neutral-700 max-w-lg">
+          Monti Studio is a London-based creative agency specialising in design, development, and digital strategy. We help brands stand out through thoughtful craft and modern technology — building websites, identities, and digital products that connect with people.
+        </p>
+        <div class="mt-8 flex gap-6 text-sm text-neutral-500">
+          <a href="https://instagram.com/montistudio" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">Instagram</a>
+          <a href="mailto:hello@montistudio.co.uk" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">hello@montistudio.co.uk</a>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="mb-20">
+        <h2 class="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-8">Services</h2>
+        <ul class="space-y-2 text-base text-neutral-700">
+          <li>— Brand Identity & Design</li>
+          <li>— Website Design & Development</li>
+          <li>— UI/UX & Product Design</li>
+          <li>— Creative Strategy</li>
+          <li>— Digital & Content Production</li>
+        </ul>
+      </section>
+
+      <!-- Projects -->
+      <section class="mb-20">
+        <h2 class="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-8">Projects</h2>
+        <ul class="space-y-2 text-base">
+          <li>
+            <a href="#" class="underline underline-offset-4 text-neutral-700 hover:text-neutral-900 transition-colors">Project One</a>
+          </li>
+          <li>
+            <a href="#" class="underline underline-offset-4 text-neutral-700 hover:text-neutral-900 transition-colors">Project Two</a>
+          </li>
+          <li>
+            <a href="#" class="underline underline-offset-4 text-neutral-700 hover:text-neutral-900 transition-colors">Project Three</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Clients -->
+      <section class="mb-20">
+        <h2 class="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-8">Clients</h2>
+        <p class="text-base text-neutral-700 leading-relaxed">
+          Client One, Client Two, Client Three, Client Four, Client Five, Client Six, Client Seven, Client Eight & more.
+        </p>
+      </section>
+
+      <!-- Video -->
+      <section class="mb-20">
+        <div class="aspect-video bg-neutral-200 rounded-sm overflow-hidden flex items-center justify-center">
+          <span class="text-neutral-400 text-sm">Showreel / video embed</span>
+          <!-- Replace with: <video src="/showreel.mp4" autoplay muted loop playsinline class="w-full h-full object-cover"></video> -->
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="pt-12 border-t border-neutral-300/60">
+        <p class="text-sm text-neutral-400 mb-4">Portfolio available upon request.</p>
+        <div class="flex gap-6 text-sm text-neutral-500">
+          <a href="mailto:hello@montistudio.co.uk" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">hello@montistudio.co.uk</a>
+          <a href="https://instagram.com/montistudio" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">Instagram</a>
+        </div>
+        <p class="text-xs text-neutral-300 mt-12">&copy; {new Date().getFullYear()} Monti Studio</p>
+      </footer>
+
     </div>
-  </section>
-</Layout>
+
+  </body>
+</html>
