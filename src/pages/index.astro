@@ -1,17 +1,77 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Monti Studio — Creative Agency">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 pt-24 pb-32">
+    <h1 class="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.1] max-w-4xl">
+      We design and build
+      <span class="text-neutral-500">digital products that people love.</span>
+    </h1>
+    <p class="text-lg text-neutral-400 mt-8 max-w-xl">
+      Monti Studio is a creative agency helping brands stand out through design, development, and strategy.
+    </p>
+    <div class="mt-10 flex gap-4">
+      <a href="/contact" class="px-6 py-3 bg-white text-neutral-950 rounded-full font-medium hover:bg-neutral-200 transition-colors">
+        Start a project
+      </a>
+      <a href="/work" class="px-6 py-3 border border-neutral-700 rounded-full text-neutral-300 hover:border-neutral-500 transition-colors">
+        See our work
+      </a>
+    </div>
+  </section>
+
+  <!-- Featured Work -->
+  <section class="max-w-6xl mx-auto px-6 pb-32">
+    <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-widest mb-12">Selected Work</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <a href="/work" class="group block">
+        <div class="aspect-[4/3] bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800/50 flex items-center justify-center">
+          <span class="text-neutral-700 text-sm">Project image</span>
+        </div>
+        <h3 class="mt-4 text-lg font-medium group-hover:text-neutral-300 transition-colors">Project One</h3>
+        <p class="text-neutral-500 text-sm">Brand Identity &middot; Web Design</p>
+      </a>
+      <a href="/work" class="group block">
+        <div class="aspect-[4/3] bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800/50 flex items-center justify-center">
+          <span class="text-neutral-700 text-sm">Project image</span>
+        </div>
+        <h3 class="mt-4 text-lg font-medium group-hover:text-neutral-300 transition-colors">Project Two</h3>
+        <p class="text-neutral-500 text-sm">Web Development &middot; Strategy</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="border-t border-neutral-800/50 py-32">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-widest mb-12">What We Do</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div>
+          <h3 class="text-xl font-medium mb-3">Design</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">Brand identity, UI/UX design, and creative direction that captures your vision and speaks to your audience.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-medium mb-3">Development</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">Fast, responsive websites and web apps built with modern tech. Clean code, great performance.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-medium mb-3">Strategy</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">Digital strategy, content planning, and growth consulting to help your brand reach the right people.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-32">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight">Have a project in mind?</h2>
+      <p class="text-neutral-400 mt-4 text-lg">Let's talk about how we can help.</p>
+      <a href="/contact" class="inline-block mt-8 px-8 py-4 bg-white text-neutral-950 rounded-full font-medium hover:bg-neutral-200 transition-colors">
+        Get in touch
+      </a>
+    </div>
+  </section>
+</Layout>
