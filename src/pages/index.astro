@@ -1,5 +1,14 @@
 ---
 import '../styles/global.css';
+
+const images = [
+  '/hero.jpg',
+  '/slide-1.jpg',
+  '/slide-2.jpg',
+  '/slide-3.jpg',
+  '/slide-4.jpg',
+  '/slide-5.jpg',
+];
 ---
 
 <html lang="en">
@@ -10,83 +19,153 @@ import '../styles/global.css';
     <meta name="description" content="Monti Studio — Creative agency crafting digital experiences." />
     <title>Monti Studio</title>
   </head>
-  <body class="bg-[#f5f3f0] text-neutral-900 font-sans antialiased">
+  <body class="bg-black text-white font-serif m-0 p-0">
 
-    <div class="max-w-2xl mx-auto px-6 py-20 md:py-32">
+    <!-- ===== HERO ===== -->
+    <div id="hero" class="relative w-screen h-screen overflow-hidden">
 
-      <!-- Name -->
-      <header class="mb-16">
-        <h1 class="text-[11vw] md:text-[4.5rem] font-light tracking-[0.15em] uppercase leading-none">
-          Monti<br />Studio
+      <!-- Image layers for crossfade -->
+      {images.map((src, i) => (
+        <div
+          class={`hero-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+          style={`background-image: url('${src}');`}
+        />
+      ))}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 z-[1]"></div>
+
+      <!-- Left half = prev, right half = next -->
+      <div class="absolute inset-0 z-[2] flex">
+        <div id="hero-prev" class="w-1/2 h-full cursor-w-resize"></div>
+        <div id="hero-next" class="w-1/2 h-full cursor-e-resize"></div>
+      </div>
+
+      <!-- Text overlay -->
+      <div class="relative z-[3] flex items-end justify-between w-full h-full px-8 md:px-12 pb-10 md:pb-14 pointer-events-none">
+        <h1 class="text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] font-light tracking-[0.08em] uppercase leading-none">
+          Monti Studio<span class="text-white/60">,</span>
         </h1>
-      </header>
+        <nav class="text-[1rem] md:text-[1.25rem] lg:text-[1.5rem] font-light italic pointer-events-auto">
+          <button id="open-about" class="hover:opacity-60 transition-opacity cursor-pointer">About</button>
+        </nav>
+      </div>
+    </div>
 
-      <!-- Bio -->
-      <section class="mb-20">
-        <p class="text-base md:text-lg leading-relaxed text-neutral-700 max-w-lg">
-          Monti Studio is a London-based creative agency specialising in design, development, and digital strategy. We help brands stand out through thoughtful craft and modern technology — building websites, identities, and digital products that connect with people.
-        </p>
-        <div class="mt-8 flex gap-6 text-sm text-neutral-500">
-          <a href="https://instagram.com/montistudio" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">Instagram</a>
-          <a href="mailto:hello@montistudio.co.uk" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">hello@montistudio.co.uk</a>
+    <!-- ===== ABOUT OVERLAY ===== -->
+    <div id="about" class="fixed inset-0 z-50 bg-black text-white opacity-0 pointer-events-none transition-opacity duration-700">
+
+      <div class="relative w-full h-screen overflow-hidden">
+        <!-- Blurred background image -->
+        <div id="about-bg" class="absolute inset-0 bg-cover bg-center bg-[#1a1816] blur-[12px] scale-105" style="background-image: url('/slide-1.jpg');"></div>
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <!-- All content overlaid -->
+        <div class="relative z-10 flex flex-col h-full px-8 md:px-12">
+
+          <!-- Bio text — top right -->
+          <div class="pt-10 md:pt-14 max-w-2xl ml-auto">
+            <p class="text-[12px] md:text-[13px] leading-[1.9] text-neutral-300 font-serif">
+              Based in London, Monti Studio is an independent creative agency specialising in design, development, and digital strategy. Backed by experience working with forward-thinking brands, Monti Studio aims to create thoughtful, multidisciplinary work that fosters meaningful connections.
+            </p>
+          </div>
+
+          <!-- Middle nav bar -->
+          <div class="flex items-center justify-between mt-auto text-[13px] md:text-[14px] font-serif">
+            <span class="text-[1.25rem] md:text-[1.5rem] font-light tracking-[0.08em] uppercase">Monti Studio<span class="text-white/60">,</span></span>
+            <div class="flex gap-10 text-neutral-300">
+              <button id="close-about" class="hover:text-white transition-colors cursor-pointer">Close</button>
+              <a href="https://instagram.com/montistudio" target="_blank" rel="noopener" class="hover:text-white transition-colors">Instagram</a>
+              <a href="mailto:hello@montistudio.co.uk" class="hover:text-white transition-colors">hello@montistudio.co.uk</a>
+            </div>
+          </div>
+
+          <!-- Bottom info section -->
+          <div class="mt-auto pb-8 md:pb-10">
+
+            <!-- Services + Projects row -->
+            <div class="flex justify-between items-start">
+              <div>
+                <h2 class="text-[10px] uppercase tracking-[0.25em] text-neutral-500 mb-4 font-serif">Services</h2>
+                <ul class="space-y-1 text-[12px] text-neutral-400 font-serif">
+                  <li>— Brand Identity & Design</li>
+                  <li>— Website Design & Development</li>
+                  <li>— UI/UX & Product Design</li>
+                  <li>— Creative Strategy</li>
+                  <li>— Digital & Content Production</li>
+                </ul>
+              </div>
+              <div class="text-right">
+                <h2 class="text-[10px] uppercase tracking-[0.25em] text-neutral-500 mb-4 font-serif">Projects</h2>
+                <ul class="space-y-1 text-[12px] text-neutral-400 font-serif">
+                  <li><a href="#" class="underline underline-offset-4 decoration-neutral-700 hover:text-white transition-colors">Project One →</a></li>
+                  <li><a href="#" class="underline underline-offset-4 decoration-neutral-700 hover:text-white transition-colors">Project Two →</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Clients -->
+            <div class="mt-8">
+              <h2 class="text-[10px] uppercase tracking-[0.25em] text-neutral-500 mb-3 font-serif">Clients</h2>
+              <p class="text-[12px] text-neutral-400 font-serif leading-[1.8] max-w-lg">
+                Client One, Client Two, Client Three, Client Four, Client Five, Client Six, Client Seven, Client Eight & more.
+              </p>
+            </div>
+
+            <!-- Portfolio note — bottom right -->
+            <div class="mt-8 text-right">
+              <p class="text-[10px] uppercase tracking-[0.25em] text-neutral-500 font-serif">Portfolio Available Upon Request</p>
+            </div>
+
+          </div>
         </div>
-      </section>
-
-      <!-- Services -->
-      <section class="mb-20">
-        <h2 class="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-8">Services</h2>
-        <ul class="space-y-2 text-base text-neutral-700">
-          <li>— Brand Identity & Design</li>
-          <li>— Website Design & Development</li>
-          <li>— UI/UX & Product Design</li>
-          <li>— Creative Strategy</li>
-          <li>— Digital & Content Production</li>
-        </ul>
-      </section>
-
-      <!-- Projects -->
-      <section class="mb-20">
-        <h2 class="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-8">Projects</h2>
-        <ul class="space-y-2 text-base">
-          <li>
-            <a href="#" class="underline underline-offset-4 text-neutral-700 hover:text-neutral-900 transition-colors">Project One</a>
-          </li>
-          <li>
-            <a href="#" class="underline underline-offset-4 text-neutral-700 hover:text-neutral-900 transition-colors">Project Two</a>
-          </li>
-          <li>
-            <a href="#" class="underline underline-offset-4 text-neutral-700 hover:text-neutral-900 transition-colors">Project Three</a>
-          </li>
-        </ul>
-      </section>
-
-      <!-- Clients -->
-      <section class="mb-20">
-        <h2 class="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-8">Clients</h2>
-        <p class="text-base text-neutral-700 leading-relaxed">
-          Client One, Client Two, Client Three, Client Four, Client Five, Client Six, Client Seven, Client Eight & more.
-        </p>
-      </section>
-
-      <!-- Video -->
-      <section class="mb-20">
-        <div class="aspect-video bg-neutral-200 rounded-sm overflow-hidden flex items-center justify-center">
-          <span class="text-neutral-400 text-sm">Showreel / video embed</span>
-          <!-- Replace with: <video src="/showreel.mp4" autoplay muted loop playsinline class="w-full h-full object-cover"></video> -->
-        </div>
-      </section>
-
-      <!-- Footer -->
-      <footer class="pt-12 border-t border-neutral-300/60">
-        <p class="text-sm text-neutral-400 mb-4">Portfolio available upon request.</p>
-        <div class="flex gap-6 text-sm text-neutral-500">
-          <a href="mailto:hello@montistudio.co.uk" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">hello@montistudio.co.uk</a>
-          <a href="https://instagram.com/montistudio" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-neutral-900 transition-colors">Instagram</a>
-        </div>
-        <p class="text-xs text-neutral-300 mt-12">&copy; {new Date().getFullYear()} Monti Studio</p>
-      </footer>
+      </div>
 
     </div>
+
+    <script>
+      // ---- Image cycling ----
+      const slides = document.querySelectorAll('.hero-slide');
+      const aboutBg = document.getElementById('about-bg');
+      let current = 0;
+      const total = slides.length;
+
+      function showSlide(index: number) {
+        slides[current].classList.remove('opacity-100');
+        slides[current].classList.add('opacity-0');
+        current = (index + total) % total;
+        slides[current].classList.remove('opacity-0');
+        slides[current].classList.add('opacity-100');
+        // sync about background to current slide
+        if (aboutBg) {
+          aboutBg.style.backgroundImage = slides[current].style.backgroundImage;
+        }
+      }
+
+      document.getElementById('hero-next')?.addEventListener('click', () => showSlide(current + 1));
+      document.getElementById('hero-prev')?.addEventListener('click', () => showSlide(current - 1));
+
+      // Keyboard arrows
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') showSlide(current + 1);
+        if (e.key === 'ArrowLeft') showSlide(current - 1);
+      });
+
+      // ---- About overlay ----
+      const about = document.getElementById('about');
+      const openBtn = document.getElementById('open-about');
+      const closeBtn = document.getElementById('close-about');
+
+      openBtn?.addEventListener('click', () => {
+        about?.classList.remove('opacity-0', 'pointer-events-none');
+        about?.classList.add('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        about?.classList.add('opacity-0', 'pointer-events-none');
+        about?.classList.remove('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = '';
+      });
+    </script>
 
   </body>
 </html>
