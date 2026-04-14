@@ -75,6 +75,26 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
       if (e.key === 'ArrowLeft') showSlide(current - 1);
     });
 
+    // ---- Touch/swipe navigation ----
+    const hero = document.getElementById('hero');
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    hero?.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    hero?.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      // only trigger if horizontal swipe is dominant and exceeds threshold
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) showSlide(current + 1);
+        else showSlide(current - 1);
+      }
+    }, { passive: true });
+
     // ---- About overlay ----
     const about = document.getElementById('about');
     document.getElementById('open-about')?.addEventListener('click', () => {
