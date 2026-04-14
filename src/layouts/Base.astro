@@ -11,6 +11,10 @@ const {
   title = 'Monti Studio',
   description = 'Monti Studio — Creative agency crafting digital experiences.',
 } = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://montistudio.co.uk';
+const ogImage = `${siteUrl}/og-image.jpg`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
@@ -20,6 +24,41 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: 'Monti Studio',
+      url: siteUrl,
+      description: 'Independent creative agency specialising in design, development, and digital strategy.',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'London',
+        addressCountry: 'GB',
+      },
+      sameAs: ['https://instagram.com/montistudio'],
+    })} />
+
+    <!-- Fonts -->
     <Font cssVariable="--font-cormorant" preload />
     <slot name="head" />
   </head>
