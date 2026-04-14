@@ -1,0 +1,59 @@
+---
+interface Slide {
+  type: 'image' | 'video';
+  src: string | ImageMetadata;
+  alt?: string;
+}
+
+interface Props {
+  slides: Slide[];
+}
+
+const { slides } = Astro.props;
+---
+
+<div id="hero" class="relative w-screen h-screen overflow-hidden">
+
+  <!-- Slide layers for crossfade -->
+  {slides.map((slide, i) => (
+    slide.type === 'video' ? (
+      <div
+        class={`hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+        data-type="video"
+      >
+        <video class="h-full w-auto max-w-none" muted loop playsinline preload="auto">
+          <source src={slide.src as string} type="video/mp4" />
+        </video>
+      </div>
+    ) : (
+      <div
+        class={`hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+        data-type="image"
+        data-src={typeof slide.src === 'string' ? slide.src : (slide.src as ImageMetadata).src}
+      >
+        <img
+          src={typeof slide.src === 'string' ? slide.src : (slide.src as ImageMetadata).src}
+          alt={slide.alt || ''}
+          class="h-full w-auto max-w-none"
+        />
+      </div>
+    )
+  ))}
+  <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 z-[1]"></div>
+
+  <!-- Left half = prev, right half = next -->
+  <div class="absolute inset-0 z-[2] flex">
+    <div id="hero-prev" class="w-1/2 h-full cursor-w-resize"></div>
+    <div id="hero-next" class="w-1/2 h-full cursor-e-resize"></div>
+  </div>
+
+  <!-- Text overlay -->
+  <div class="relative z-[3] flex items-end justify-between w-full h-full px-8 md:px-12 pb-10 md:pb-14 pointer-events-none">
+    <h1 class="text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] font-light tracking-[0.08em] uppercase leading-none">
+      Monti Studio<span class="text-white/60">,</span>
+    </h1>
+    <nav class="text-[1rem] md:text-[1.25rem] lg:text-[1.5rem] font-light italic pointer-events-auto">
+      <button id="open-about" class="hover:opacity-60 transition-opacity cursor-pointer">About</button>
+    </nav>
+  </div>
+</div>
