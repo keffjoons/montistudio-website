@@ -61,18 +61,29 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
         video.play();
       }
 
-      // sync about background — use image slides only
       if (aboutBg && next.dataset.type === 'image' && next.dataset.src) {
         aboutBg.style.backgroundImage = `url('${next.dataset.src}')`;
       }
+
+      // schedule next autoplay advance
+      scheduleAutoplay();
     }
 
-    document.getElementById('hero-next')?.addEventListener('click', () => showSlide(current + 1));
-    document.getElementById('hero-prev')?.addEventListener('click', () => showSlide(current - 1));
+    // Manual navigation — pauses autoplay, then advances
+    function manualNav(index: number) {
+      pauseAutoplay();
+      showSlide(index);
+      startIdleResume();
+    }
 
+    // ---- Click navigation ----
+    document.getElementById('hero-next')?.addEventListener('click', () => manualNav(current + 1));
+    document.getElementById('hero-prev')?.addEventListener('click', () => manualNav(current - 1));
+
+    // ---- Keyboard navigation ----
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') showSlide(current + 1);
-      if (e.key === 'ArrowLeft') showSlide(current - 1);
+      if (e.key === 'ArrowRight') manualNav(current + 1);
+      if (e.key === 'ArrowLeft') manualNav(current - 1);
     });
 
     // ---- Touch/swipe navigation ----
@@ -88,16 +99,72 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
     hero?.addEventListener('touchend', (e) => {
       const dx = e.changedTouches[0].clientX - touchStartX;
       const dy = e.changedTouches[0].clientY - touchStartY;
-      // only trigger if horizontal swipe is dominant and exceeds threshold
       if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) showSlide(current + 1);
-        else showSlide(current - 1);
+        if (dx < 0) manualNav(current + 1);
+        else manualNav(current - 1);
       }
     }, { passive: true });
+
+    // ---- Autoplay showreel ----
+    const SLIDE_INTERVAL = 5000;
+    const IDLE_RESUME_DELAY = 15000;
+    let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
+    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+    let autoplayActive = true;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function scheduleAutoplay() {
+      clearTimeout(autoplayTimer!);
+      if (!autoplayActive || prefersReducedMotion) return;
+
+      const slide = heroSlides[current];
+      const video = getVideo(slide);
+
+      if (video) {
+        // for video slides, advance when the video ends
+        video.addEventListener('ended', () => {
+          if (autoplayActive) showSlide(current + 1);
+        }, { once: true });
+      } else {
+        autoplayTimer = setTimeout(() => showSlide(current + 1), SLIDE_INTERVAL);
+      }
+    }
+
+    function pauseAutoplay() {
+      autoplayActive = false;
+      clearTimeout(autoplayTimer!);
+      clearTimeout(idleTimer!);
+    }
+
+    function resumeAutoplay() {
+      autoplayActive = true;
+      scheduleAutoplay();
+    }
+
+    function startIdleResume() {
+      clearTimeout(idleTimer!);
+      idleTimer = setTimeout(resumeAutoplay, IDLE_RESUME_DELAY);
+    }
+
+    // Pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearTimeout(autoplayTimer!);
+      } else if (autoplayActive) {
+        scheduleAutoplay();
+      }
+    });
+
+    // Start autoplay on load (unless reduced motion)
+    if (!prefersReducedMotion) {
+      scheduleAutoplay();
+    }
 
     // ---- About overlay ----
     const about = document.getElementById('about');
     document.getElementById('open-about')?.addEventListener('click', () => {
+      pauseAutoplay();
       about?.classList.remove('opacity-0', 'pointer-events-none');
       about?.classList.add('opacity-100', 'pointer-events-auto');
       document.body.style.overflow = 'hidden';
@@ -106,6 +173,7 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
       about?.classList.add('opacity-0', 'pointer-events-none');
       about?.classList.remove('opacity-100', 'pointer-events-auto');
       document.body.style.overflow = '';
+      resumeAutoplay();
     });
   </script>
 </Base>
