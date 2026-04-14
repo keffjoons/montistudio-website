@@ -23,7 +23,7 @@ const { slides } = Astro.props;
         class={`hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
         data-type="video"
       >
-        <video class="h-full w-auto max-w-none" muted loop playsinline preload="auto">
+        <video class="h-full w-auto max-w-none" muted playsinline preload="auto">
           <source src={slide.src as string} type="video/mp4" />
         </video>
       </div>
