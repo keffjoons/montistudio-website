@@ -3,20 +3,30 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import AboutOverlay from '../components/AboutOverlay.astro';
 
+import slide1 from '../assets/slides/slide-1.jpg';
+import slide2 from '../assets/slides/slide-2.jpg';
+import slide3 from '../assets/slides/slide-3.jpg';
+import slide4 from '../assets/slides/slide-4.jpg';
+import slide5 from '../assets/slides/slide-5.jpg';
+import slide6 from '../assets/slides/slide-6.jpg';
+import slide7 from '../assets/slides/slide-7.jpg';
+import slide8 from '../assets/slides/slide-8.jpg';
+import slide9 from '../assets/slides/slide-9.jpg';
+
 const slides = [
-  { type: 'image' as const, src: '/slide-1.jpg', alt: 'Portfolio photograph' },
-  { type: 'image' as const, src: '/slide-2.jpg', alt: 'Portfolio photograph' },
-  { type: 'image' as const, src: '/slide-3.jpg', alt: 'Portfolio photograph' },
-  { type: 'image' as const, src: '/slide-4.jpg', alt: 'Portfolio photograph' },
-  { type: 'video' as const, src: '/slide-video.mp4' },
-  { type: 'image' as const, src: '/slide-5.jpg', alt: 'Portfolio photograph' },
-  { type: 'image' as const, src: '/slide-6.jpg', alt: 'Portfolio photograph' },
-  { type: 'image' as const, src: '/slide-7.jpg', alt: 'Portfolio photograph' },
-  { type: 'image' as const, src: '/slide-8.jpg', alt: 'Portfolio photograph' },
-  { type: 'image' as const, src: '/slide-9.jpg', alt: 'Portfolio photograph' },
+  { type: 'image' as const, src: slide1, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide2, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide3, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide4, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'video' as const, src: '/slide-video.mp4', alt: 'Video from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide5, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide6, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide7, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide8, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide9, alt: 'Film photograph from Monti Studio portfolio' },
 ];
 
-const firstImageSrc = (slides.find(s => s.type === 'image')?.src ?? '') as string;
+const firstImageSrc = (slides[0].src as ImageMetadata).src;
 ---
 
 <Base>
@@ -60,7 +70,6 @@ const firstImageSrc = (slides.find(s => s.type === 'image')?.src ?? '') as strin
     document.getElementById('hero-next')?.addEventListener('click', () => showSlide(current + 1));
     document.getElementById('hero-prev')?.addEventListener('click', () => showSlide(current - 1));
 
-    // Keyboard arrows
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') showSlide(current + 1);
       if (e.key === 'ArrowLeft') showSlide(current - 1);
@@ -68,16 +77,12 @@ const firstImageSrc = (slides.find(s => s.type === 'image')?.src ?? '') as strin
 
     // ---- About overlay ----
     const about = document.getElementById('about');
-    const openBtn = document.getElementById('open-about');
-    const closeBtn = document.getElementById('close-about');
-
-    openBtn?.addEventListener('click', () => {
+    document.getElementById('open-about')?.addEventListener('click', () => {
       about?.classList.remove('opacity-0', 'pointer-events-none');
       about?.classList.add('opacity-100', 'pointer-events-auto');
       document.body.style.overflow = 'hidden';
     });
-
-    closeBtn?.addEventListener('click', () => {
+    document.getElementById('close-about')?.addEventListener('click', () => {
       about?.classList.add('opacity-0', 'pointer-events-none');
       about?.classList.remove('opacity-100', 'pointer-events-auto');
       document.body.style.overflow = '';

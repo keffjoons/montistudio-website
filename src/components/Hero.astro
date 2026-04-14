@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Slide {
   type: 'image' | 'video';
   src: string | ImageMetadata;
@@ -29,11 +31,14 @@ const { slides } = Astro.props;
       <div
         class={`hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
         data-type="image"
-        data-src={typeof slide.src === 'string' ? slide.src : (slide.src as ImageMetadata).src}
+        data-src={(slide.src as ImageMetadata).src}
       >
-        <img
-          src={typeof slide.src === 'string' ? slide.src : (slide.src as ImageMetadata).src}
-          alt={slide.alt || ''}
+        <Image
+          src={slide.src as ImageMetadata}
+          alt={slide.alt || 'Portfolio photograph'}
+          format="webp"
+          quality={80}
+          loading={i === 0 ? 'eager' : 'lazy'}
           class="h-full w-auto max-w-none"
         />
       </div>
