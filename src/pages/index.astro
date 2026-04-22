@@ -14,29 +14,71 @@ import slide8 from '../assets/slides/slide-8.jpg';
 import slide9 from '../assets/slides/slide-9.jpg';
 
 const slides = [
-  { type: 'image' as const, src: slide1, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide2, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide3, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide4, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'video' as const, src: '/slide-video.mp4', alt: 'Video from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide5, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide6, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide7, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide8, alt: 'Film photograph from Monti Studio portfolio' },
-  { type: 'image' as const, src: slide9, alt: 'Film photograph from Monti Studio portfolio' },
+  { type: 'image' as const, src: slide1, alt: 'Monti Studio editorial image one' },
+  { type: 'image' as const, src: slide2, alt: 'Monti Studio editorial image two' },
+  { type: 'image' as const, src: slide3, alt: 'Monti Studio editorial image three' },
+  { type: 'image' as const, src: slide4, alt: 'Monti Studio editorial image four' },
+  { type: 'video' as const, src: '/slide-video.mp4', alt: 'Monti Studio motion reel' },
+  { type: 'image' as const, src: slide5, alt: 'Monti Studio editorial image five' },
+  { type: 'image' as const, src: slide6, alt: 'Monti Studio editorial image six' },
+  { type: 'image' as const, src: slide7, alt: 'Monti Studio editorial image seven' },
+  { type: 'image' as const, src: slide8, alt: 'Monti Studio editorial image eight' },
+  { type: 'image' as const, src: slide9, alt: 'Monti Studio editorial image nine' },
 ];
-
-const firstImageSrc = (slides[0].src as ImageMetadata).src;
 ---
 
 <Base>
+  <!-- Loading screen with typing animation -->
+  <div id="loader" class="fixed inset-0 z-[100] flex items-center justify-center bg-white transition-opacity duration-700">
+    <h1 class="text-[0.92rem] md:text-[1.55rem] font-light tracking-[0.18em] uppercase font-serif text-black">
+      <span id="typed-text"></span><span id="cursor" class="cursor-blink inline-block w-[2px] h-[0.9em] bg-black ml-0.5 align-middle"></span>
+    </h1>
+  </div>
+
   <Hero slides={slides} />
-  <AboutOverlay defaultBgSrc={firstImageSrc} />
+  <AboutOverlay />
 
   <script>
-    // ---- Slide cycling (images + video) ----
+    // ---- Loading screen typing animation ----
+    const loaderText = 'Monti Studio';
+    const typedTextEl = document.getElementById('typed-text');
+    const cursorEl = document.getElementById('cursor');
+    const loaderEl = document.getElementById('loader');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let charIndex = 0;
+
+    document.body.style.overflow = 'hidden';
+
+    function finishLoader() {
+      cursorEl?.setAttribute('hidden', 'true');
+      loaderEl?.classList.add('opacity-0');
+      document.body.style.overflow = '';
+      window.setTimeout(() => loaderEl?.remove(), 700);
+    }
+
+    function typeNextChar() {
+      if (!typedTextEl) return;
+
+      if (charIndex < loaderText.length) {
+        typedTextEl.textContent += loaderText[charIndex];
+        charIndex++;
+        window.setTimeout(typeNextChar, 85);
+      } else {
+        window.setTimeout(finishLoader, 650);
+      }
+    }
+
+    if (typedTextEl) {
+      if (reduceMotion) {
+        typedTextEl.textContent = loaderText;
+        window.setTimeout(finishLoader, 350);
+      } else {
+        window.setTimeout(typeNextChar, 320);
+      }
+    }
+
+    // ---- Slide navigation (manual only, no autoplay) ----
     const heroSlides = document.querySelectorAll('.hero-slide');
-    const aboutBg = document.getElementById('about-bg');
     let current = 0;
     const total = heroSlides.length;
 
@@ -50,7 +92,7 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
       prev.classList.add('opacity-0');
       getVideo(prev)?.pause();
 
-      current = (index + total) % total;
+      current = ((index % total) + total) % total;
       const next = heroSlides[current];
       next.classList.remove('opacity-0');
       next.classList.add('opacity-100');
@@ -60,33 +102,19 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
         video.currentTime = 0;
         video.play();
       }
-
-      if (aboutBg && next.dataset.type === 'image' && next.dataset.src) {
-        aboutBg.style.backgroundImage = `url('${next.dataset.src}')`;
-      }
-
-      // schedule next autoplay advance
-      scheduleAutoplay();
     }
 
-    // Manual navigation — pauses autoplay, then advances
-    function manualNav(index: number) {
-      pauseAutoplay();
-      showSlide(index);
-      startIdleResume();
-    }
+    // Click navigation
+    document.getElementById('hero-next')?.addEventListener('click', () => showSlide(current + 1));
+    document.getElementById('hero-prev')?.addEventListener('click', () => showSlide(current - 1));
 
-    // ---- Click navigation ----
-    document.getElementById('hero-next')?.addEventListener('click', () => manualNav(current + 1));
-    document.getElementById('hero-prev')?.addEventListener('click', () => manualNav(current - 1));
-
-    // ---- Keyboard navigation ----
+    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') manualNav(current + 1);
-      if (e.key === 'ArrowLeft') manualNav(current - 1);
+      if (e.key === 'ArrowRight') showSlide(current + 1);
+      if (e.key === 'ArrowLeft') showSlide(current - 1);
     });
 
-    // ---- Touch/swipe navigation ----
+    // Touch/swipe navigation
     const hero = document.getElementById('hero');
     let touchStartX = 0;
     let touchStartY = 0;
@@ -100,71 +128,40 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
       const dx = e.changedTouches[0].clientX - touchStartX;
       const dy = e.changedTouches[0].clientY - touchStartY;
       if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) manualNav(current + 1);
-        else manualNav(current - 1);
+        if (dx < 0) showSlide(current + 1);
+        else showSlide(current - 1);
       }
     }, { passive: true });
 
-    // ---- Autoplay showreel ----
-    const SLIDE_INTERVAL = 5000;
-    const IDLE_RESUME_DELAY = 15000;
-    let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
-    let idleTimer: ReturnType<typeof setTimeout> | null = null;
-    let autoplayActive = true;
+    // Desktop cursor arrow for slide navigation
+    const heroCursor = document.getElementById('hero-cursor');
+    const heroCursorIcon = document.getElementById('hero-cursor-icon');
+    const supportsFinePointer = window.matchMedia('(pointer: fine)').matches;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function updateHeroCursor(event: MouseEvent) {
+      if (!hero || !heroCursor || !heroCursorIcon) return;
 
-    function scheduleAutoplay() {
-      clearTimeout(autoplayTimer!);
-      if (!autoplayActive || prefersReducedMotion) return;
+      const bounds = hero.getBoundingClientRect();
+      const onLeftSide = event.clientX < bounds.left + (bounds.width / 2);
 
-      const slide = heroSlides[current];
-      const video = getVideo(slide);
-
-      if (video) {
-        // for video slides, advance when the video ends
-        video.addEventListener('ended', () => {
-          if (autoplayActive) showSlide(current + 1);
-        }, { once: true });
-      } else {
-        autoplayTimer = setTimeout(() => showSlide(current + 1), SLIDE_INTERVAL);
-      }
+      heroCursor.style.left = `${event.clientX}px`;
+      heroCursor.style.top = `${event.clientY}px`;
+      heroCursor.classList.add('opacity-100');
+      heroCursorIcon.classList.toggle('rotate-180', onLeftSide);
     }
 
-    function pauseAutoplay() {
-      autoplayActive = false;
-      clearTimeout(autoplayTimer!);
-      clearTimeout(idleTimer!);
-    }
-
-    function resumeAutoplay() {
-      autoplayActive = true;
-      scheduleAutoplay();
-    }
-
-    function startIdleResume() {
-      clearTimeout(idleTimer!);
-      idleTimer = setTimeout(resumeAutoplay, IDLE_RESUME_DELAY);
-    }
-
-    // Pause when tab is hidden
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        clearTimeout(autoplayTimer!);
-      } else if (autoplayActive) {
-        scheduleAutoplay();
-      }
-    });
-
-    // Start autoplay on load (unless reduced motion)
-    if (!prefersReducedMotion) {
-      scheduleAutoplay();
+    if (hero && heroCursor && supportsFinePointer) {
+      hero.addEventListener('mouseenter', (event) => updateHeroCursor(event));
+      hero.addEventListener('mousemove', (event) => updateHeroCursor(event));
+      hero.addEventListener('mouseleave', () => {
+        heroCursor.classList.remove('opacity-100');
+      });
     }
 
     // ---- About overlay ----
     const about = document.getElementById('about');
     document.getElementById('open-about')?.addEventListener('click', () => {
-      pauseAutoplay();
+      heroCursor?.classList.remove('opacity-100');
       about?.classList.remove('opacity-0', 'pointer-events-none');
       about?.classList.add('opacity-100', 'pointer-events-auto');
       document.body.style.overflow = 'hidden';
@@ -173,7 +170,13 @@ const firstImageSrc = (slides[0].src as ImageMetadata).src;
       about?.classList.add('opacity-0', 'pointer-events-none');
       about?.classList.remove('opacity-100', 'pointer-events-auto');
       document.body.style.overflow = '';
-      resumeAutoplay();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && about?.classList.contains('opacity-100')) {
+        about.classList.add('opacity-0', 'pointer-events-none');
+        about.classList.remove('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = '';
+      }
     });
   </script>
 </Base>

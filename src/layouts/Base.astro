@@ -9,7 +9,7 @@ interface Props {
 
 const {
   title = 'Monti Studio',
-  description = 'Monti Studio — Creative agency crafting digital experiences.',
+  description = 'Monti is a creative office specialising in strategy, creative direction, and content within the fashion, beauty, and travel space—shaping and elevating visual identities and narratives with intention.',
 } = Astro.props;
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://montistudio.co.uk';
@@ -49,20 +49,19 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
       '@type': 'ProfessionalService',
       name: 'Monti Studio',
       url: siteUrl,
-      description: 'Independent creative agency specialising in design, development, and digital strategy.',
+      description,
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'London',
         addressCountry: 'GB',
       },
-      sameAs: ['https://instagram.com/montistudio'],
     })} />
 
     <!-- Fonts -->
     <Font cssVariable="--font-cormorant" preload />
     <slot name="head" />
   </head>
-  <body class="bg-black text-white font-serif m-0 p-0">
+  <body class="bg-white text-black font-serif m-0 p-0">
     <slot />
   </body>
 </html>

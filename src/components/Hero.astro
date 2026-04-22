@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import ArrowIcon from './ArrowIcon.astro';
 
 interface Slide {
   type: 'image' | 'video';
@@ -12,18 +13,46 @@ interface Props {
 }
 
 const { slides } = Astro.props;
+
+// Each image displays at a unique size on the white background
+const sizes = [
+  { maxW: '85vw', maxH: '80vh' },
+  { maxW: '55vw', maxH: '65vh' },
+  { maxW: '70vw', maxH: '85vh' },
+  { maxW: '45vw', maxH: '50vh' },
+  { maxW: '90vw', maxH: '75vh' },
+  { maxW: '60vw', maxH: '70vh' },
+  { maxW: '75vw', maxH: '90vh' },
+  { maxW: '50vw', maxH: '55vh' },
+  { maxW: '65vw', maxH: '75vh' },
+  { maxW: '80vw', maxH: '70vh' },
+];
 ---
 
-<div id="hero" class="relative w-screen h-dvh overflow-hidden touch-manipulation">
+<!-- Fixed header -->
+<header class="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 py-4 md:px-8 md:py-5 bg-white/78 backdrop-blur-sm">
+  <h1 class="text-[0.88rem] md:text-[0.98rem] font-light tracking-[0.12em] uppercase leading-none font-serif text-black">
+    Monti Studio
+  </h1>
+  <nav class="flex items-center gap-4 text-[0.78rem] md:gap-6 md:text-[0.88rem] font-light italic font-serif text-black/72">
+    <button id="open-about" class="cursor-pointer transition-opacity hover:opacity-50">About</button>
+  </nav>
+</header>
 
-  <!-- Slide layers for crossfade -->
+<div id="hero" class="relative w-screen h-dvh overflow-hidden touch-manipulation md:cursor-none">
+
+  <!-- Slide layers for crossfade — each at a different size -->
   {slides.map((slide, i) => (
     slide.type === 'video' ? (
       <div
         class={`hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
         data-type="video"
       >
-        <video class="h-full w-auto max-w-none" muted playsinline preload="auto">
+        <video
+          class="h-auto w-auto object-contain"
+          style={`max-width: ${sizes[i].maxW}; max-height: ${sizes[i].maxH};`}
+          muted playsinline preload="auto" loop
+        >
           <source src={slide.src as string} type="video/mp4" />
         </video>
       </div>
@@ -31,34 +60,32 @@ const { slides } = Astro.props;
       <div
         class={`hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
         data-type="image"
-        data-src={(slide.src as ImageMetadata).src}
       >
         <Image
           src={slide.src as ImageMetadata}
-          alt={slide.alt || 'Portfolio photograph'}
+          alt={slide.alt || 'Monti Studio editorial image'}
           format="webp"
           quality={80}
           loading={i === 0 ? 'eager' : 'lazy'}
-          class="h-full w-auto max-w-none"
+          class="h-auto w-auto object-contain"
+          style={`max-width: ${sizes[i].maxW}; max-height: ${sizes[i].maxH};`}
         />
       </div>
     )
   ))}
-  <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 z-[1]"></div>
 
-  <!-- Left half = prev, right half = next -->
+  <!-- Click areas: left half = prev, right half = next -->
   <div class="absolute inset-0 z-[2] flex">
-    <div id="hero-prev" class="w-1/2 h-full cursor-w-resize"></div>
-    <div id="hero-next" class="w-1/2 h-full cursor-e-resize"></div>
+    <div id="hero-prev" class="h-full w-1/2 cursor-pointer md:cursor-none"></div>
+    <div id="hero-next" class="h-full w-1/2 cursor-pointer md:cursor-none"></div>
   </div>
 
-  <!-- Text overlay -->
-  <div class="relative z-[3] flex items-end justify-between w-full h-full px-8 md:px-12 pb-10 md:pb-14 pointer-events-none">
-    <h1 class="text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] font-light tracking-[0.08em] uppercase leading-none">
-      Monti Studio<span class="text-white/60">,</span>
-    </h1>
-    <nav class="text-[1rem] md:text-[1.25rem] lg:text-[1.5rem] font-light italic pointer-events-auto">
-      <button id="open-about" class="hover:opacity-60 transition-opacity cursor-pointer">About</button>
-    </nav>
+  <div
+    id="hero-cursor"
+    class="pointer-events-none fixed left-0 top-0 z-[45] hidden h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center text-black/72 opacity-0 transition-opacity duration-150 md:flex"
+  >
+    <span id="hero-cursor-icon" class="inline-flex items-center justify-center transition-transform duration-200">
+      <ArrowIcon class="h-[13px] w-[13px]" />
+    </span>
   </div>
 </div>
