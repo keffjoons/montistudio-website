@@ -13,13 +13,8 @@ export default defineConfig({
   fonts: [{
     provider: fontProviders.google(),
     name: 'Cormorant Garamond',
-    weights: [400, 600],
+    weights: [300, 400],
     cssVariable: '--font-cormorant',
     fallbacks: ['Georgia', 'serif'],
-  }, {
-    provider: fontProviders.google(),
-    name: 'Poiret One',
-    cssVariable: '--font-display',
-    fallbacks: ['Helvetica Neue', 'sans-serif'],
   }],
 });

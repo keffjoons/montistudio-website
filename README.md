@@ -27,7 +27,7 @@ Wheel/drag moves the gallery; selecting an image opens its detail. Previous/next
 
 Book validates fields and opens a `mailto:` draft to `hello@montistudio.co.uk`. The visitor completes sending in their email app. There is no form submission backend, payment collection or simulated delivery confirmation.
 
-Fonts are self-hosted: Cormorant Garamond for Monti's wordmark and Poiret One for the display interface. OFL notices are in `public/fonts/`. Meech's photography, logo, proprietary typeface and application bundles are not shipped.
+Cormorant Garamond, the classic Monti site's serif, is self-hosted and used throughout the interface and canvas captions. The header is a single lowercase montistudio home link at the top left. OFL notices are in `public/fonts/`. Meech's photography, logo, proprietary typeface and application bundles are not shipped.
 
 ## Restore the classic site
 

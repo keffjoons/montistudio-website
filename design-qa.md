@@ -1,3 +1,24 @@
+# Serif typography and header revision — 22 October 2026
+
+final result: passed
+
+User direction: use only the classic Monti serif, remove the centred logo, and put lowercase montistudio at the top left. This direction supersedes the Meech typography and centred-brand treatment in the historical report below.
+
+- Confirmed the classic tag uses Cormorant Garamond, with a light upright header. Current configuration self-hosts only that family at weights 300/400. Body, form controls, navigation, headings and WebGL image captions use it; active Poiret/Helvetica stacks and the second font preload were removed.
+- Header is one montistudio home link. At 1280 × 720 its bounds start x=25/y=20; at 390 × 844 they start x=12/y=14. No centred wordmark or visible Creative Office label remains. Moved the detail Back link below the header so it cannot intersect the new name.
+- Source/before visual: workspace `work/screenshots/monti-live-home-desktop.png`. After: `serif-home-desktop.png`. Both are 1280 × 720 pixels and CSS pixels, at one image pixel per CSS pixel. Full side-by-side: `serif-home-comparison.jpg` (2560 × 720); focused header: `serif-header-comparison.png` (2560 × 100). These show the previous implementation versus the requested revision, not an assertion of unchanged typography.
+- Mobile captures at 390 × 844: `serif-home-mobile.png`, `serif-about-mobile.png`, `serif-book-mobile.png`. Photo/canvas typography: `serif-photo-desktop.png`. Desktop contact: `serif-book-desktop.png`.
+- Five surfaces checked: **typography** matches the classic family in CSS/computed styles and rendered captions; **spacing** keeps the name at the left and controls clear; **colors** retain the existing paper/ink tokens; **images** are unchanged supplied assets with their existing crops; **copy** changes only the header name presentation.
+- [P2, fixed] The enlarged serif UI text initially moved the desktop enquiry button into the clock target: hit tests at 5% and 25% across the button failed, with its bottom at y≈614.8. Tightened form offset and row spacing; post-fix bottom y≈574.8 and all 5%/25%/50%/90% hit tests pass. Evidence: `serif-book-desktop.png`. Mobile button bottom y≈598.3, centre hit passes, document width equals viewport width 390.
+- Browser checks: desktop Home/Photo/Book and mobile Home/About/Book; header home link navigates correctly; browser console has no captured errors/warnings. Production build generates all 15 routes successfully. No dependencies changed and no form was submitted.
+- An independent read-only code review found no missed active font declarations or old header selectors. No actionable P0/P1/P2 findings remain for this revision.
+
+All screenshot paths above are relative to `/Users/calebsmiler/Documents/ChatGPT/Monti/`. Within the screenshot list, bare filenames are in `work/screenshots/`. Physical-device testing and external mail delivery are outside this typography revision.
+
+---
+
+## Historical orbit acceptance (before the serif/header revision)
+
 # Monti orbit — visual and interaction QA
 
 Date: 22 October 2026. Browser-rendered static implementation: `http://127.0.0.1:4322/`. Source: `https://www.meech213.com/`. Brief: reproduce its layout/motion with Monti's existing imagery and text.

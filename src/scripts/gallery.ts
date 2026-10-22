@@ -102,8 +102,8 @@ export function createGallery(
   );
   const captionTextures = new Map<string, CanvasTexture>();
   const displayFont =
-    getComputedStyle(host).getPropertyValue("--font-display").trim() ||
-    '"Poiret One", sans-serif';
+    getComputedStyle(host).getPropertyValue("--font-cormorant").trim() ||
+    '"Cormorant Garamond", Georgia, serif';
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const abort = new AbortController();
   const eventOptions = { signal: abort.signal };
