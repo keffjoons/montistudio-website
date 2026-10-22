@@ -281,7 +281,7 @@ export function createGallery(
     );
     for (const plane of planes) {
       if (
-        (view !== "photo" && view !== "video") ||
+        view !== "photo" ||
         !nearbyIds.has(plane.item.id) ||
         !plane.mesh.material.map
       ) {
