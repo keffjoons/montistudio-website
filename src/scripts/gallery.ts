@@ -529,10 +529,16 @@ export function createGallery(
           Math.tan(MathUtils.degToRad(camera.fov / 2)) *
           (camera.position.z - 0.35)) /
         height;
-      const bodyCenter = (228 + height - 140) / 2;
+      const shortLandscape = compact && height <= 540 && width > height;
+      const top = shortLandscape ? 72 : 228;
+      const bottom = shortLandscape ? 24 : 140;
+      const left = shortLandscape ? Math.min(250, width * 0.4) : 0;
+      const right = shortLandscape ? 16 : 0;
+      const bodyCenterX = (left + width - right) / 2;
+      const bodyCenterY = (top + height - bottom) / 2;
       group.position.set(
-        groupX,
-        compact ? (height / 2 - bodyCenter) * unitsPerPixel : 0,
+        compact ? (bodyCenterX - width / 2) * unitsPerPixel : groupX,
+        compact ? (height / 2 - bodyCenterY) * unitsPerPixel : 0,
         0.35,
       );
       group.rotation.set(
@@ -540,8 +546,9 @@ export function createGallery(
         compact ? -0.01 : -0.02,
         compact ? -0.035 : -0.14,
       );
-      const maxWidth = width * 0.74 * unitsPerPixel;
-      const maxHeight = Math.max(100, height - 228 - 140 - 20) * unitsPerPixel;
+      const maxWidth = (width - left - right) * 0.74 * unitsPerPixel;
+      const maxHeight =
+        Math.max(100, height - top - bottom - 20) * unitsPerPixel;
       let previousHeight = 0;
       let y = 0;
       for (const [index, item] of activeItems.entries()) {
@@ -930,15 +937,18 @@ export function createGallery(
     if (view === "detail" && callbacks.onActiveChange) {
       let nearest: Plane | undefined;
       let distance = Infinity;
+      let focusX = 0;
       let focusY = 0;
       if (width <= 720) {
         group.getWorldPosition(projected).project(camera);
+        focusX = projected.x;
         focusY = projected.y;
       }
       for (const plane of planes) {
         plane.mesh.getWorldPosition(projected).project(camera);
         const score =
-          Math.abs(projected.y - focusY) + Math.abs(projected.x) * 0.25;
+          Math.abs(projected.y - focusY) +
+          Math.abs(projected.x - focusX) * 0.25;
         if (score < distance) {
           nearest = plane;
           distance = score;

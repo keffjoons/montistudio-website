@@ -194,3 +194,15 @@ button:disabled { cursor: default; }
   #studio[data-view="photo"][data-detail="true"] .detail-prev { left: 1px; }
   #studio[data-view="photo"][data-detail="true"] .detail-next { right: 1px; }
 }
+
+@media (max-width: 720px) and (max-height: 540px) and (orientation: landscape) {
+  #studio[data-detail="true"] #clock { display: none; }
+  #studio[data-detail="true"] .detail-credit { width: calc(min(250px,40vw) - 32px); right: auto; }
+  #studio[data-view][data-detail="true"] .detail-counter { left: 16px; right: auto; top: 250px; }
+  #studio[data-view="photo"][data-detail="true"] #gallery-stage { clip-path: inset(72px 16px 24px min(250px,40vw)); }
+  #studio[data-view="photo"][data-detail="true"] .detail-hint { top: 222px; }
+  #studio[data-view="photo"][data-detail="true"] .detail-prev,
+  #studio[data-view="photo"][data-detail="true"] .detail-next { top: calc(50% + 24px); }
+  #studio[data-view="photo"][data-detail="true"] .detail-prev { left: calc(min(250px,40vw) + 1px); }
+  #studio[data-view="video"][data-detail="true"] .detail-video { left: calc(50% + min(125px,20vw) - 8px); top: calc(50% + 24px); max-width: calc(100% - min(250px,40vw) - 32px); max-height: calc(100svh - 96px); }
+}
