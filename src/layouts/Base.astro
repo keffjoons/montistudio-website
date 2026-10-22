@@ -20,7 +20,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
@@ -59,9 +58,10 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Fonts -->
     <Font cssVariable="--font-cormorant" preload />
+    <Font cssVariable="--font-display" preload />
     <slot name="head" />
   </head>
-  <body class="bg-white text-black font-serif m-0 p-0">
+  <body>
     <slot />
   </body>
 </html>

@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Studio from '../components/Studio.astro';
+export function getStaticPaths() {
+  return [
+    ...['photo', 'video', 'about', 'book'].map(path => ({ params: { path } })),
+    ...Array.from({ length: 9 }, (_, i) => ({ params: { path: `photo/${String(i + 1).padStart(2, '0')}` } })),
+    { params: { path: 'video/film' } },
+  ];
+}
+const [initialView, initialId] = Astro.params.path!.split('/');
+const names: Record<string, string> = { photo: 'Photo', video: 'Video', about: 'About', book: 'Book' };
+---
+<Base title={`${names[initialView]} — Monti Studio`}><Studio initialView={initialView} initialId={initialId} /></Base>

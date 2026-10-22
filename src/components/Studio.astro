@@ -1,0 +1,61 @@
+---
+import { getPortfolio, studio } from '../data/portfolio';
+interface Props { initialView?: string; initialId?: string }
+const { initialView = 'home', initialId = '' } = Astro.props;
+const items = await getPortfolio();
+const photos = items.filter(item => item.type === 'image');
+const film = items.find(item => item.type === 'video')!;
+const isDetail = Boolean(initialId);
+const menu = [
+  { name: 'About', view: 'about', href: '/about' }, { name: 'Video', view: 'video', href: '/video' },
+  { name: 'Photo', view: 'photo', href: '/photo' }, { name: 'Home', view: 'home', href: '/' },
+  { name: 'Book', view: 'book', href: '/book' },
+];
+const selected = items.find(item => item.id === initialId);
+---
+<div id="studio" data-view={initialView} data-detail={isDetail ? 'true' : 'false'}>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="office-note section-link" href="/about" aria-label="About Monti Studio">Creative<br />Office</a>
+    <a class="wordmark section-link" href="/" aria-label="Monti Studio home"><span>monti</span><small>STUDIO</small></a>
+    <nav class="header-links" aria-label="Contact and studio"><a href={`mailto:${studio.email}`}>Email</a><a class="section-link" href="/about">About</a><a class="section-link" href="/book">Book</a></nav>
+  </header>
+  <main id="main" tabindex="-1">
+    <h1 class="sr-only" id="page-heading">Monti Studio — Creative Office</h1>
+    <div id="gallery-stage" aria-hidden="true" hidden={initialView === 'about' || initialView === 'book'}></div>
+    <div id="portfolio-fallback" class="portfolio-fallback" hidden={initialView === 'about' || initialView === 'book' || isDetail}>
+      <ul aria-label="Monti Studio imagery">{items.map(item => <li data-category={item.category} data-type={item.type}><a class="project-link" href={`/${item.type === 'video' ? 'video' : 'photo'}/${item.id}`} data-id={item.id}><img src={item.type === 'video' ? item.poster : item.src} alt={item.alt} width={item.width} height={item.height} loading="eager" /><span>{item.category} <small>{item.type === 'video' ? 'Film' : item.id}</small></span></a></li>)}</ul>
+    </div>
+    <section class="about-page content-page" id="about-page" hidden={initialView !== 'about'} aria-labelledby="about-heading">
+      <div class="about-copy"><div><h2 id="about-heading">{studio.description}</h2><p class="founder-names">Caleb Smiler &amp; Matylda Sala</p></div><div class="about-services"><img src={photos[1].src} alt={photos[1].alt} width={photos[1].width} height={photos[1].height} /><div><h3>Services</h3><ul>{studio.services.map(service => <li>{service}</li>)}</ul><a href={`mailto:${studio.email}`}>{studio.email}</a></div></div></div>
+      <img class="about-image" src={photos[3].src} alt={photos[3].alt} width={photos[3].width} height={photos[3].height} />
+    </section>
+    <section class="book-page content-page" id="book-page" hidden={initialView !== 'book'} aria-labelledby="book-heading">
+      <div class="book-content"><h2 id="book-heading">Book</h2><p class="book-intro">Strategy, creative direction, and content within the fashion, beauty, and travel space.</p><a class="contact-address" href={`mailto:${studio.email}`}>{studio.email}</a>
+        <form id="enquiry-form" action={`mailto:${studio.email}`} method="get"><input type="hidden" name="subject" value="Monti Studio — project enquiry" /><div class="form-grid">
+          <label>First name <span aria-hidden="true">*</span><input name="firstName" autocomplete="given-name" required maxlength="80" /></label>
+          <label>Last name <span aria-hidden="true">*</span><input name="lastName" autocomplete="family-name" required maxlength="80" /></label>
+          <label>Email address <span aria-hidden="true">*</span><input name="email" type="email" autocomplete="email" required maxlength="200" /></label>
+          <label>Company<input name="company" autocomplete="organization" maxlength="160" /></label>
+          <label class="brief-field">Tell us about your project <span aria-hidden="true">*</span><textarea name="body" rows="3" required maxlength="3000"></textarea></label>
+        </div><div class="form-bottom"><p>Opens a draft in your email app.</p><button type="submit">Continue in email <span aria-hidden="true">↗</span></button></div><p id="enquiry-status" role="status"></p></form>
+      </div>
+      <div class="service-orbit" aria-hidden="true"><span>Fashion</span><span>Beauty</span><span>Travel</span><span>Strategy</span><span>Creative direction</span><span>Content</span></div>
+    </section>
+    <section class="detail-page" id="detail-page" hidden={!isDetail} aria-labelledby="detail-heading">
+      <div class="detail-title"><h2 id="detail-heading">{selected?.category ?? 'Photo'}</h2><p id="detail-number">{initialId === 'film' ? 'Film' : initialId}</p></div>
+      <p class="detail-hint" id="detail-hint">Scroll to view</p><p class="detail-counter" id="detail-counter" aria-live="polite">{initialId || '01'} / {String(photos.length).padStart(2, '0')}</p>
+      <img id="detail-fallback" class="detail-fallback" src={selected?.type === 'image' ? selected.src : photos[0].src} alt={selected?.alt ?? photos[0].alt} hidden={selected?.type === 'video'} />
+      <video id="detail-video" class="detail-video" aria-label="Monti Studio fashion film" controls playsinline preload="none" poster={film.poster} src={film.fullSrc} hidden={initialId !== 'film'}></video>
+      <a class="detail-back section-link" href={initialView === 'video' ? '/video' : '/photo'}>Back</a><button class="detail-prev" type="button" aria-label="Previous image">Prev</button><button class="detail-next" type="button" aria-label="Next image">Next</button>
+    </section>
+  </main>
+  <footer class="site-footer"><p>© Monti Studio {new Date().getFullYear()}</p><p>London</p></footer>
+  <nav class="clock" id="clock" aria-label="Main navigation">
+    <div class="clock-hands" aria-hidden="true"><span class="hour-hand"></span><span class="minute-hand"></span><span class="clock-pin"></span></div>
+    <ul>{[...menu, ...menu].map((item, i) => <li class="clock-item" data-menu-index={i} aria-hidden={i >= 5 ? 'true' : 'false'}><a class="section-link" href={item.href} data-view={item.view} tabindex={i >= 5 ? -1 : 0} aria-current={item.view === initialView && i < 5 ? 'page' : undefined}>{item.name}</a></li>)}</ul>
+    <div class="category-nav" id="category-nav" aria-label="Photo categories" hidden={initialView !== 'photo' || isDetail}>{['All', 'Fashion', 'Beauty', 'Travel'].map((category, i) => <button type="button" data-category={category} aria-pressed={i === 0 ? 'true' : 'false'}>{category}</button>)}</div>
+  </nav>
+  <script id="portfolio-data" type="application/json" set:html={JSON.stringify(items).replace(/</g, '\\u003c')} />
+</div>
+<script>import '../scripts/studio';</script>
