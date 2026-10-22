@@ -1,16 +1,22 @@
+import { createPageMotion } from './motion';
+import { createDetailMotion } from './details';
 import { createGallery, type GalleryController, type GalleryItem, type GalleryView } from './gallery';
 
 type Section = 'home' | 'photo' | 'video' | 'about' | 'book';
-type Item = GalleryItem & { fullSrc?: string };
+type Item = GalleryItem & { fullSrc?: string; project?: string; credit?: string; sourceUrl?: string };
 const root = document.querySelector<HTMLElement>('#studio')!;
+const pageMotion = createPageMotion(root);
+const detailMotion = createDetailMotion(root);
 const find = <T extends HTMLElement = HTMLElement>(selector: string) => root.querySelector<T>(selector)!;
 const items: Item[] = JSON.parse(find('#portfolio-data').textContent || '[]');
 const photos = items.filter(item => item.type === 'image');
+const videos = items.filter(item => item.type === 'video');
 const host = find('#gallery-stage');
 const fallback = find('#portfolio-fallback');
 const detail = find('#detail-page');
 const video = find<HTMLVideoElement>('#detail-video');
 const clock = find('#clock');
+const clockHands = find('.clock-hands');
 const menuItems = [...root.querySelectorAll<HTMLElement>('.clock-item')];
 const categories = find('#category-nav');
 const views: Section[] = ['about', 'video', 'photo', 'home', 'book'];
@@ -24,6 +30,7 @@ let gallery: GalleryController | undefined;
 let graphicsFailed = false;
 let shift = 0;
 let menuFrame = 0;
+let menuTarget = 0;
 
 function angleAt(slot: number) {
   const floor = Math.floor(slot);
@@ -65,20 +72,43 @@ function paintClock() {
 }
 
 function turnClock(animate = true) {
-  cancelAnimationFrame(menuFrame);
+  if (menuFrame) {
+    cancelAnimationFrame(menuFrame);
+    menuFrame = 0;
+    shift = mod(menuTarget, 5);
+    menuTarget = shift;
+    paintClock();
+  }
+  clockHands.style.transform = '';
   clock.dataset.animating = 'true';
   const base = views.indexOf(section) - 3;
-  const targets = Array.from({ length: 9 }, (_, i) => base + (i - 4) * 5);
-  const target = targets.reduce((best, next) => Math.abs(next - shift) < Math.abs(best - shift) ? next : best);
-  if (!animate || reducedMotion.matches) { shift = target; paintClock(); clock.dataset.animating = 'false'; return; }
+  const target = base + Math.round((shift - base) / 5) * 5;
+  menuTarget = target;
+  if (!animate || reducedMotion.matches || Math.abs(target - shift) < .001) {
+    shift = mod(target, 5);
+    menuTarget = shift;
+    paintClock();
+    clock.dataset.animating = 'false';
+    return;
+  }
   const start = shift;
+  const rotation = -8 * Math.sign(target - start);
   const startedAt = performance.now();
   const tick = (now: number) => {
-    const progress = Math.min(1, (now - startedAt) / 650);
-    const eased = 1 - Math.pow(1 - progress, 4);
+    const progress = Math.min(1, (now - startedAt) / 800);
+    const eased = progress < .5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
     shift = start + (target - start) * eased;
+    clockHands.style.transform = `rotate(${rotation * Math.sin(Math.PI * eased)}deg)`;
     paintClock();
-    if (progress < 1) menuFrame = requestAnimationFrame(tick); else clock.dataset.animating = 'false';
+    if (progress < 1) menuFrame = requestAnimationFrame(tick);
+    else {
+      menuFrame = 0;
+      shift = mod(target, 5);
+      menuTarget = shift;
+      paintClock();
+      clockHands.style.transform = '';
+      clock.dataset.animating = 'false';
+    }
   };
   menuFrame = requestAnimationFrame(tick);
 }
@@ -89,22 +119,50 @@ function syncFallback() {
   }
 }
 
-function updateDetail(id: string) {
+function updateDetail(id: string, reveal = false) {
   const item = items.find(item => item.id === id);
   if (!item) return;
   activeId = id;
   find('#detail-heading').textContent = item.category;
   find('#detail-number').textContent = item.type === 'video' ? 'Film' : item.id;
-  find('#detail-counter').textContent = item.type === 'video' ? '01 / 01' : `${String(photos.findIndex(photo => photo.id === id) + 1).padStart(2, '0')} / ${String(photos.length).padStart(2, '0')}`;
+  find('#detail-credit').hidden = !item.project && !item.credit && !item.sourceUrl;
+  find('#detail-project').textContent = item.project ?? '';
+  find('#detail-project').hidden = !item.project;
+  find('#detail-contributor').textContent = item.credit ?? '';
+  find('#detail-contributor').hidden = !item.credit;
+  find('#detail-source-line').hidden = !item.sourceUrl;
+  find<HTMLAnchorElement>('#detail-source').href = item.sourceUrl ?? '';
+  const media = item.type === 'video' ? videos : photos;
+  detailMotion.setCounter(media.findIndex(entry => entry.id === id) + 1, media.length);
   const image = find<HTMLImageElement>('#detail-fallback');
   image.src = item.type === 'image' ? item.src : item.poster!;
   image.alt = item.alt;
   image.hidden = item.type === 'video';
+  video.pause();
+  if (item.type === 'video') {
+    const source = item.fullSrc ?? item.src;
+    video.width = item.width;
+    video.height = item.height;
+    video.poster = item.poster ?? '';
+    video.setAttribute('aria-label', item.project ?? item.alt);
+    if (video.getAttribute('src') !== source) {
+      video.src = source;
+      video.load();
+    }
+  }
   video.hidden = item.type !== 'video';
   find('#detail-hint').hidden = item.type === 'video';
   find('.detail-prev').hidden = item.type === 'video';
   find('.detail-next').hidden = item.type === 'video';
   find<HTMLAnchorElement>('.detail-back').href = item.type === 'video' ? '/video' : '/photo';
+  if (item.type === 'image') {
+    const index = photos.findIndex(photo => photo.id === id);
+    const previous = photos[mod(index - 1, photos.length)];
+    const next = photos[mod(index + 1, photos.length)];
+    find<HTMLImageElement>('#previous-preview').src = previous.previewSrc ?? previous.src;
+    find<HTMLImageElement>('#next-preview').src = next.previewSrc ?? next.src;
+  }
+  if (reveal) detailMotion.reveal();
 }
 
 function renderPath(animate = true) {
@@ -123,12 +181,13 @@ function renderPath(animate = true) {
   host.hidden = graphicsFailed || contentPage || videoDetail;
   fallback.hidden = contentPage || Boolean(selected);
   video.pause();
-  if (selected) updateDetail(selected.id);
+  if (selected) updateDetail(selected.id, true); else detailMotion.hide();
   if (!contentPage && !videoDetail) gallery?.setView(selected ? 'detail' : section as GalleryView, { category, selectedId: selected?.id });
   gallery?.setEnabled(!contentPage && !videoDetail);
   if (contentPage) find(`#${section}-page`).scrollTop = 0;
   syncFallback();
   turnClock(animate);
+  pageMotion.enter(section);
   const name = section[0].toUpperCase() + section.slice(1);
   document.title = section === 'home' ? 'Monti Studio' : `${name} — Monti Studio`;
   find('#page-heading').textContent = `${name} — Monti Studio`;
@@ -143,7 +202,10 @@ function navigate(path: string) {
   find('#main').focus({ preventScroll: true });
 }
 
-function selectItem(id: string) { navigate(id === 'film' ? '/video/film' : `/photo/${id}`); }
+function selectItem(id: string) {
+  const item = items.find(entry => entry.id === id);
+  if (item) navigate(`/${item.type === 'video' ? 'video' : 'photo'}/${item.id}`);
+}
 function stepDetail(direction: number) {
   const index = photos.findIndex(item => item.id === activeId);
   if (index >= 0) selectItem(photos[mod(index + direction, photos.length)].id);
@@ -165,15 +227,28 @@ find('.detail-prev').addEventListener('click', () => stepDetail(-1));
 find('.detail-next').addEventListener('click', () => stepDetail(1));
 window.addEventListener('popstate', () => renderPath());
 window.addEventListener('resize', paintClock);
+reducedMotion.addEventListener('change', () => {
+  if (reducedMotion.matches) {
+    cancelAnimationFrame(menuFrame);
+    menuFrame = 0;
+    shift = mod(menuTarget, 5);
+    menuTarget = shift;
+    clockHands.style.transform = '';
+    clock.dataset.animating = 'false';
+    paintClock();
+  }
+});
 window.addEventListener('keydown', event => {
   if (event.key === 'Escape' && activeId) { event.preventDefault(); navigate(section === 'video' ? '/video' : '/photo'); return; }
   if ((event.target as HTMLElement).closest('input,textarea,select,button,a')) return;
   if (event.key === 'Escape') { if (activeId) navigate(section === 'video' ? '/video' : '/photo'); else if (section !== 'home') navigate('/'); }
   if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
     if (section === 'about' || section === 'book') return;
+    const activeItem = items.find(item => item.id === activeId);
+    if (activeItem?.type === 'video') return;
     event.preventDefault();
     const direction = event.key === 'ArrowRight' ? 1 : -1;
-    if (activeId && activeId !== 'film') stepDetail(direction); else gallery?.nudge(direction);
+    if (activeItem?.type === 'image') stepDetail(direction); else gallery?.nudge(direction);
   }
 });
 
@@ -186,13 +261,17 @@ find<HTMLFormElement>('#enquiry-form').addEventListener('submit', event => {
   location.href = draft;
 });
 
-host.addEventListener('gallery-ready', () => root.classList.add('gallery-ready'));
+host.addEventListener('gallery-ready', () => {
+  graphicsFailed = false;
+  host.hidden = section === 'about' || section === 'book' || items.find(item => item.id === activeId)?.type === 'video';
+  root.classList.add('gallery-ready');
+});
 host.addEventListener('gallery-unavailable', () => { graphicsFailed = true; root.classList.remove('gallery-ready'); host.hidden = true; });
 try {
   gallery = createGallery(host, items, {
     onSelect: selectItem,
     onActiveChange: id => {
-      if (root.dataset.detail === 'true' && section === 'photo' && id !== activeId) {
+      if (root.dataset.detail === 'true' && section === 'photo' && id !== activeId && items.find(item => item.id === id)?.type === 'image') {
         updateDetail(id);
         history.replaceState(null, '', `/photo/${id}`);
       }
@@ -200,4 +279,5 @@ try {
   });
 } catch { graphicsFailed = true; host.hidden = true; }
 renderPath(false);
-window.addEventListener('pagehide', event => { if (!(event as PageTransitionEvent).persisted) { cancelAnimationFrame(menuFrame); gallery?.destroy(); } });
+document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); });
+window.addEventListener('pagehide', event => { video.pause(); if (!(event as PageTransitionEvent).persisted) { cancelAnimationFrame(menuFrame); pageMotion.destroy(); detailMotion.destroy(); gallery?.destroy(); } });

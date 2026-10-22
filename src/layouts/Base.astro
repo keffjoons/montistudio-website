@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import '../styles/motion.css';
+import '../styles/details.css';
 import { Font } from 'astro:assets';
 
 interface Props {
@@ -58,6 +60,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Fonts -->
     <Font cssVariable="--font-cormorant" preload />
+    <Font cssVariable="--font-inter" preload />
     <slot name="head" />
   </head>
   <body>

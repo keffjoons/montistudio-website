@@ -1,3 +1,43 @@
+# Portfolio, typography and restrained motion — 22 October 2026
+
+final result: passed (local browser acceptance)
+
+Current user direction supersedes the historical typography and motion choices below: uppercase MONTISTUDIO in the classic Cormorant Garamond, Inter body/UI, native portfolio imagery, selected Matylda reels and much subtler motion.
+
+- Content: 49 photographs (nine existing plus 40 native JPEG extractions) and eight videos (the existing film plus seven selected public reels). All 62 static routes and their media assets exist. Twelve featured Home items remain; the remaining work recycles into the gallery. No enlargement of small source images. Source hashes/credits are recorded in `docs/portfolio-images.json` and `docs/reel-sources.json`; PDF CV/contact pages, account credentials and transient CDN links are excluded.
+- Attribution: published founder work retains its project context. PDF work is labelled fashion/styling assistance; reels are credited to Matylda Sala and link to the original public posts. No Monti commission history is invented. Outdoor skincare and Ffern use silent website versions; the other five retain their original source audio.
+- Motion: deformation coefficients reduced by 90%, wheel/drag sensitivity and velocity cap halved, category blur removed, caption opacity floor .85. Home entry scale .99→1 and tiny offsets finish within .532s. About image scale 1.015→1, words rise 8px; Book rises 8px with a 2° orbit gesture. Detail text moves 4px and counters roll for at most 450 ms. Clock hands settle through 8° over 800 ms. Reduced-motion preference shows content immediately and skips clock movement.
+- Five surfaces checked: **type** uses the requested serif display/wordmark and Inter body, with one top-left name; **spacing** keeps project context, controls and Book CTA clear; **colors** preserve paper/ink; **images** retain supplied/native content and aspect ratios; **copy** retains Monti’s joint-founder description, real email-draft flow and accurate credits.
+
+## Browser evidence
+
+Evidence root: `/Users/calebsmiler/Documents/ChatGPT/Monti/work/screenshots/`. Desktop 1280 × 720 and mobile 390 × 844 CSS viewports produce matching one-pixel-per-CSS-pixel PNGs. Comparisons join unscaled captures, before on the left and after on the right. Changing content/orbit positions are intentional; motion is not frame-synchronised.
+
+| Check | Evidence |
+|---|---|
+| Header, expanded Home and restrained scroll | `subtle-home-desktop-final.png`, `subtle-home-scroll-desktop-final.png`, `subtle-home-comparison.png` |
+| Expanded Video gallery | `subtle-video-gallery-desktop.png` |
+| About, Book and CTA spacing | `subtle-about-desktop.png`, `subtle-book-desktop.png`, `subtle-book-mobile.png` |
+| Native reel detail and mobile context | `subtle-muuto-desktop.png`, `subtle-muuto-mobile-final.png`, `subtle-mobile-video-comparison.png` |
+| Imported image, role credit and mobile controls | `subtle-photo-49-mobile-final.png`, `subtle-mobile-photo-comparison.png` |
+| Beauty category, eight matching photographs | `subtle-beauty-desktop-final.png` |
+
+- [P2, fixed] The native mobile portrait player covered the new project credit, original-source link and counter. Reserved context above the player, supplied intrinsic dimensions and constrained the player to the viewing area. At 390 × 844, credit is y148–197.5; portrait video is x57.75/y216,274.5×488, bottom704. The original-source link passes DOM hit-testing. Landscape players retain their aspect ratio and centre within the same area.
+- [P2, fixed] Mobile photo detail spread imagery behind the header, attribution and buttons. Reduced the compact strip’s tilt and fitted each image into the body, preserving aspect ratio. At 390 × 844 the stage is clipped below 228 px/above the bottom 140 px; credit ends at 180 px. Prev/Next remain readable, and 49→01 wrapping/active title/counter work. Desktop geometry is retained. Separate actual-Three.js projection/raycast checks covered 49 varied-aspect cards and five viewport sizes.
+- [P2, fixed] An intentional pause could reject a pending preview play() and permanently mark the healthy preview blocked. Ignore aborts and stale completions, retaining genuine autoplay/format failure handling. Eleven focused checks of the actual handler passed.
+
+## Functional validation and limits
+
+- Actual canvas selection of the Muuto card opened its correct native route/source. Native playback reached 12.433 s / readyState 4 at 1080 × 1920. Landscape Phaea playback advanced and paused after Back; its native dimensions remain 1916 × 1078. Native videos have controls, no autoplay, metadata preload, and pause on navigation, backgrounding and page exit.
+- Photo 49→01 navigation, accessible counter text, eight-image Beauty filter, Home scrolling and reduced-motion navigation passed. Clock/counter state remains consistent after navigation. Captured final-browser errors/warnings: none.
+- Desktop and mobile Book button hit tests at 5%, 25%, 50%, 90% all pass; bottoms 542.4 px and 577.3 px respectively. Input text is 16 px and mobile document width equals 390 px. No enquiry was submitted or email sent.
+- Production build: 62 pages; all image/video paths exist; WebP limits 1440 × 2160 detail and 768 × 1152 preview, with no upscaling. Strict TypeScript passes for all four browser scripts. Native/processed asset hashes verified. Read-only correctness review completed with no remaining actionable findings after fixes.
+- This is browser-emulated mobile acceptance, not a physical-device/performance benchmark. Vite retains the existing Three.js chunk-size advisory. Production rollout is verified separately through the existing GitHub/Vercel integration and canonical site.
+
+---
+
+## Historical reports (superseded where current direction differs)
+
 # Serif typography and header revision — 22 October 2026
 
 final result: passed

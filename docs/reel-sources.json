@@ -1,0 +1,341 @@
+{
+  "provenance": "Selected prior social content by Matylda Sala. Original posts remain linked; these are not represented as Monti Studio commissions.",
+  "reels": [
+    {
+      "id": "muuto-breakfast-corner",
+      "project": "Muuto · Breakfast corner",
+      "category": "Interiors",
+      "credit": "Matylda Sala · Social content",
+      "sourceUrl": "https://www.instagram.com/matyldasala/reel/DeuAm51grY8/",
+      "sourceCaption": "our new @muutodesign breakfast corner 🤍 #advertisement",
+      "websiteAudio": true,
+      "sourceDimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "assets": {
+        "full": {
+          "file": "/reels/muuto-breakfast-corner.mp4",
+          "bytes": 5983467,
+          "sha256": "77fcbf3d6fd54b625998a3bb59984dae9eef6b04cd6d193e5e7706a117881e4d",
+          "width": 1080,
+          "height": 1920,
+          "duration": 12.433333,
+          "fps": 30.0,
+          "audio": true,
+          "codec": "h264",
+          "pixelFormat": "yuv420p",
+          "faststart": true
+        },
+        "preview": {
+          "file": "/reels/muuto-breakfast-corner-preview.mp4",
+          "bytes": 671995,
+          "sha256": "b2f1d9829612a61a7de333cb0139521946f581e386bf7cb46e851661a01f2347",
+          "width": 540,
+          "height": 960,
+          "duration": 8.0,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "faststart": true
+        },
+        "poster": {
+          "file": "/reels/muuto-breakfast-corner.jpg",
+          "bytes": 99363,
+          "sha256": "9db84f1b727c663effc0141a1102eef921ca8dd4bc8462fb3e8b5b04428f6cbf",
+          "width": 540,
+          "height": 960,
+          "frameTime": 1.0
+        }
+      }
+    },
+    {
+      "id": "rise-and-fall-autumn-reset",
+      "project": "Rise & Fall · Autumn reset",
+      "category": "Interiors",
+      "credit": "Matylda Sala · Social content",
+      "sourceUrl": "https://www.instagram.com/matyldasala/reel/DecVO_NgTRq/",
+      "sourceCaption": "autumn reset with @riseandfall 🤍",
+      "websiteAudio": true,
+      "sourceDimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "assets": {
+        "full": {
+          "file": "/reels/rise-and-fall-autumn-reset.mp4",
+          "bytes": 6948687,
+          "sha256": "0085d4b498ea997a08d7eb44564d0d4b454d8c835c97120782dd1ceb12617cdd",
+          "width": 1080,
+          "height": 1920,
+          "duration": 16.6,
+          "fps": 30.0,
+          "audio": true,
+          "codec": "h264",
+          "pixelFormat": "yuv420p",
+          "faststart": true
+        },
+        "preview": {
+          "file": "/reels/rise-and-fall-autumn-reset-preview.mp4",
+          "bytes": 624316,
+          "sha256": "8189052c7bc81a5048a7dc20e80ae693795646dd7648ac2dbaa23075bdb907d2",
+          "width": 540,
+          "height": 960,
+          "duration": 8.0,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "faststart": true
+        },
+        "poster": {
+          "file": "/reels/rise-and-fall-autumn-reset.jpg",
+          "bytes": 37487,
+          "sha256": "277b2eacc39cdf6832c7d72629acd885d990d816b33f9ba968e5f9f8482f0805",
+          "width": 540,
+          "height": 960,
+          "frameTime": 1.0
+        }
+      }
+    },
+    {
+      "id": "rise-and-fall-morning",
+      "project": "Rise & Fall · Morning light",
+      "category": "Interiors",
+      "credit": "Matylda Sala · Social content",
+      "sourceUrl": "https://www.instagram.com/matyldasala/reel/DbGeLafgRw2/",
+      "sourceCaption": "perfect @riseandfall morning 🤍",
+      "websiteAudio": true,
+      "sourceDimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "assets": {
+        "full": {
+          "file": "/reels/rise-and-fall-morning.mp4",
+          "bytes": 6792266,
+          "sha256": "e920ca59892db4828fec6a4836c4b640c886c696842dd602093a40b835f00c64",
+          "width": 1080,
+          "height": 1920,
+          "duration": 19.3,
+          "fps": 30.0,
+          "audio": true,
+          "codec": "h264",
+          "pixelFormat": "yuv420p",
+          "faststart": true
+        },
+        "preview": {
+          "file": "/reels/rise-and-fall-morning-preview.mp4",
+          "bytes": 427654,
+          "sha256": "54b94d4dfc956ad1b97373c24aeda9bdbd86b02d9f18a2a18cc8a0ebd4381e9c",
+          "width": 540,
+          "height": 960,
+          "duration": 8.0,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "faststart": true
+        },
+        "poster": {
+          "file": "/reels/rise-and-fall-morning.jpg",
+          "bytes": 27785,
+          "sha256": "445817b1b4281c9bce390c281efd37e6812bd7c020e6042a033f305aec5d76ce",
+          "width": 540,
+          "height": 960,
+          "frameTime": 1.0
+        }
+      }
+    },
+    {
+      "id": "phaea-blue-stay",
+      "project": "Phaea Blue · A quiet stay",
+      "category": "Travel",
+      "credit": "Matylda Sala · Social content",
+      "sourceUrl": "https://www.instagram.com/matyldasala/reel/DYRtPikgrEs/",
+      "sourceCaption": "Still thinking about these beautiful few days at @phaeablue Hard to forget how calm and special everything felt there!@smallluxuryhotels",
+      "websiteAudio": true,
+      "sourceDimensions": {
+        "width": 1916,
+        "height": 1078
+      },
+      "assets": {
+        "full": {
+          "file": "/reels/phaea-blue-stay.mp4",
+          "bytes": 13478869,
+          "sha256": "ba5da27cc6806e657557cfd9efcb06b5a34cd4075dd94c4e4e5d74a1eef422a4",
+          "width": 1916,
+          "height": 1078,
+          "duration": 22.833333,
+          "fps": 30.0,
+          "audio": true,
+          "codec": "h264",
+          "pixelFormat": "yuv420p",
+          "faststart": true
+        },
+        "preview": {
+          "file": "/reels/phaea-blue-stay-preview.mp4",
+          "bytes": 310840,
+          "sha256": "ae658b6a4cadb25c2492cb0f391aafb51e16f8094c5e06a601a06dde2f200e3c",
+          "width": 540,
+          "height": 304,
+          "duration": 8.0,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "faststart": true
+        },
+        "poster": {
+          "file": "/reels/phaea-blue-stay.jpg",
+          "bytes": 43954,
+          "sha256": "752d214644bc7526a858aa49aef6c414ceaad8ba085a88848f849046e231a474",
+          "width": 540,
+          "height": 304,
+          "frameTime": 1.0
+        }
+      }
+    },
+    {
+      "id": "outdoor-skincare",
+      "project": "Outdoor skincare",
+      "category": "Beauty",
+      "credit": "Matylda Sala · Social content",
+      "sourceUrl": "https://www.instagram.com/matyldasala/reel/DYKz4hVAzh6/",
+      "sourceCaption": "I love an outdoor skincare routine!",
+      "websiteAudio": false,
+      "sourceDimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "assets": {
+        "full": {
+          "file": "/reels/outdoor-skincare.mp4",
+          "bytes": 20444669,
+          "sha256": "4cd51426e7eb9a145c1200a5e19eaf22a11d614a227bd975233e34d72d718441",
+          "width": 1080,
+          "height": 1920,
+          "duration": 20.866667,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "pixelFormat": "yuv420p",
+          "faststart": true
+        },
+        "preview": {
+          "file": "/reels/outdoor-skincare-preview.mp4",
+          "bytes": 1184829,
+          "sha256": "cb4b1d20ba558ca57769ac7380d346003de34001c0b8162ad08ef7b0adf7287d",
+          "width": 540,
+          "height": 960,
+          "duration": 8.0,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "faststart": true
+        },
+        "poster": {
+          "file": "/reels/outdoor-skincare.jpg",
+          "bytes": 89176,
+          "sha256": "142c4efbfc87333b526aec128742aa24924747e744a8069b9098628307903e5e",
+          "width": 540,
+          "height": 960,
+          "frameTime": 1.0
+        }
+      }
+    },
+    {
+      "id": "resort-style",
+      "project": "Resort style",
+      "category": "Fashion",
+      "credit": "Matylda Sala · Social content",
+      "sourceUrl": "https://www.instagram.com/matyldasala/reel/DYGz5BBijDg/",
+      "sourceCaption": "at a dreamy @phaeablue wearing @stagnistudio dress @lido_etcetera bikini and a @sessun bag",
+      "websiteAudio": true,
+      "sourceDimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "assets": {
+        "full": {
+          "file": "/reels/resort-style.mp4",
+          "bytes": 4518000,
+          "sha256": "113ce244ce352c8a0f5ec21fd9a8a15fffe1831725482db3fd1743d2b45261fa",
+          "width": 1080,
+          "height": 1920,
+          "duration": 6.709002,
+          "fps": 30.0,
+          "audio": true,
+          "codec": "h264",
+          "pixelFormat": "yuv420p",
+          "faststart": true
+        },
+        "preview": {
+          "file": "/reels/resort-style-preview.mp4",
+          "bytes": 683881,
+          "sha256": "257920c968d86ed82ab950fa4c9f5b3dd8c2f568c9885ab89d66930150210fbc",
+          "width": 540,
+          "height": 960,
+          "duration": 6.7,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "faststart": true
+        },
+        "poster": {
+          "file": "/reels/resort-style.jpg",
+          "bytes": 73265,
+          "sha256": "3b9249e6e761a936965ecc2829b3f3464dc5ccd282dbca51be4df0b3e4adf526",
+          "width": 540,
+          "height": 960,
+          "frameTime": 1.0
+        }
+      }
+    },
+    {
+      "id": "ffern-day",
+      "project": "Ffern · A day",
+      "category": "Beauty",
+      "credit": "Matylda Sala · Social content",
+      "sourceUrl": "https://www.instagram.com/matyldasala/reel/DXcMf3-gveL/",
+      "sourceCaption": "a day with @ffern.co #ad",
+      "websiteAudio": false,
+      "sourceDimensions": {
+        "width": 720,
+        "height": 1280
+      },
+      "assets": {
+        "full": {
+          "file": "/reels/ffern-day.mp4",
+          "bytes": 9081711,
+          "sha256": "46bde56f92517d3e76d894d5bff32e6a3a48b5556cddc36e66c5509bde3bf8e3",
+          "width": 720,
+          "height": 1280,
+          "duration": 28.266667,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "pixelFormat": "yuv420p",
+          "faststart": true
+        },
+        "preview": {
+          "file": "/reels/ffern-day-preview.mp4",
+          "bytes": 686275,
+          "sha256": "6b797ea1fb6ef1c4b91b835ce6552100f30c962aeb9893f327a4214f05925df2",
+          "width": 540,
+          "height": 960,
+          "duration": 8.0,
+          "fps": 30.0,
+          "audio": false,
+          "codec": "h264",
+          "faststart": true
+        },
+        "poster": {
+          "file": "/reels/ffern-day.jpg",
+          "bytes": 82058,
+          "sha256": "6275283bfe3b6c676ac1f24271268c65e25c4f508737d009fcc60eb086abe53b",
+          "width": 540,
+          "height": 960,
+          "frameTime": 1.0
+        }
+      }
+    }
+  ]
+}

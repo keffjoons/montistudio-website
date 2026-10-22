@@ -16,5 +16,11 @@ export default defineConfig({
     weights: [300, 400],
     cssVariable: '--font-cormorant',
     fallbacks: ['Georgia', 'serif'],
+  }, {
+    provider: fontProviders.google(),
+    name: 'Inter',
+    weights: [400],
+    cssVariable: '--font-inter',
+    fallbacks: ['Arial', 'sans-serif'],
   }],
 });

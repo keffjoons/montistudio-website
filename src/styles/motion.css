@@ -1,0 +1,25 @@
+/* Image frames contain a small scale settle without changing their crop. */
+.motion-image-frame { display: block; overflow: hidden; }
+.motion-image-frame > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.about-image.motion-image-frame > img { object-position: center top; }
+.about-services > .motion-image-frame { width: 100%; height: 165px; }
+
+/* Nothing is hidden by default: text stays readable without script or motion. */
+.motion-word-mask { display: inline-block; overflow: clip; vertical-align: top; }
+.motion-word { display: inline-block; }
+
+@media (max-width: 720px) {
+  .about-services > .motion-image-frame { width: 115px; height: 145px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-word, .motion-image-frame > img, #enquiry-form, #enquiry-form > * {
+    transform: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+  }
+  .service-orbit > span { opacity: 1 !important; }
+}
+
+/* Reference mask padding preserves serif overhangs during the reveal. */
+.motion-word-mask, .motion-word { margin: -.3em; padding: .3em; }
